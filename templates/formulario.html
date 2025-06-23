@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Presupuestos</title>
+</head>
+<body>
+    <h2>Formulario de presupuesto</h2>
+    <form action="/generar" method="post">
+        <label>Tu nombre:</label><br>
+        <input type="text" name="nombre" required><br><br>
+
+        <label>Nombre del cliente:</label><br>
+        <input type="text" name="cliente" required><br><br>
+
+        <label>Servicios ofrecidos (separados por coma):</label><br>
+        <input type="text" name="servicios" required><br><br>
+
+        <label>Precio total:</label><br>
+        <input type="text" name="precio" required><br><br>
+
+        <label>Forma de pago:</label><br>
+        <input type="text" name="forma_pago" required><br><br>
+
+        <label>Validez del presupuesto (días):</label><br>
+        <input type="text" name="validez" required><br><br>
+
+        <button type="submit">Generar PDF</button>
+    </form>
+</body>
+</html>
