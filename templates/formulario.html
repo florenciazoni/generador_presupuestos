@@ -2,30 +2,696 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Generador de Presupuestos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Presupuestos | Moderno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 1rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-top: 1.5rem;
+        }
+        
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(76, 201, 240, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(76, 201, 240, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-header {
+            background: rgba(67, 97, 238, 0.15);
+            border-bottom: 1px solid rgba(76, 201, 240, 0.15);
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin: 0;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(76, 201, 240, 0.2);
+            border-radius: 12px;
+            color: var(--light);
+            padding: 0.8rem 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.25rem rgba(76, 201, 240, 0.25);
+            color: var(--light);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            padding: 0.9rem 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.6);
+        }
+        
+        .btn-outline-primary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50px;
+            padding: 0.7rem 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .preview-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(76, 201, 240, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .preview-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .preview-header h2 {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .preview-header p {
+            opacity: 0.7;
+        }
+        
+        .preview-content {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 300px;
+            font-family: 'Courier New', monospace;
+            overflow: auto;
+        }
+        
+        .preview-logo {
+            max-width: 180px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            gap: 1.5rem;
+        }
+        
+        .feature {
+            text-align: center;
+            max-width: 250px;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(30, 41, 59, 0.7);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(67, 97, 238, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+        
+        .feature p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .feature {
+                max-width: 100%;
+                flex: 1 1 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Formulario de presupuesto</h2>
-    <form action="/generar" method="post">
-        <label>Tu nombre:</label><br>
-        <input type="text" name="nombre" required><br><br>
+    <!-- Fondo dinámico con particles.js -->
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="floating">🧾 Generador de Presupuestos</h1>
+            <p>Creá presupuestos profesionales en minutos con nuestro generador inteligente</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-file-invoice me-2"></i>Detalles del Presupuesto</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="presupuestoForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label"><i class="fas fa-building"></i> Tu empresa</label>
+                                    <input type="text" class="form-control" name="nombre" required placeholder="Nombre de la empresa">
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label"><i class="fas fa-user-tie"></i> Cliente</label>
+                                    <input type="text" class="form-control" name="cliente" required placeholder="Nombre del cliente">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label"><i class="fas fa-clipboard-list"></i> Descripción de servicios</label>
+                                <textarea class="form-control" name="servicios" rows="4" required placeholder="Detalla los servicios a prestar..."></textarea>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label class="form-label"><i class="fas fa-money-bill-wave"></i> Precio total</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" step="0.01" class="form-control" name="precio" required placeholder="0.00">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <label class="form-label"><i class="fas fa-percentage"></i> IVA (%)</label>
+                                    <input type="number" class="form-control" name="iva" value="21" required>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <label class="form-label"><i class="fas fa-calendar-alt"></i> Validez (días)</label>
+                                    <input type="number" class="form-control" name="validez" required placeholder="30">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label"><i class="fas fa-credit-card"></i> Forma de pago</label>
+                                <input type="text" class="form-control" name="forma_pago" required placeholder="Ej: Transferencia bancaria, 50% anticipado">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label"><i class="fas fa-image"></i> Logo de tu empresa (opcional)</label>
+                                <input type="file" class="form-control" id="logoInput" name="logo" accept="image/*">
+                                <div class="form-text mt-2" style="opacity: 0.6;">Formatos: JPG, PNG (máx. 2MB)</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label"><i class="fas fa-info-circle"></i> Notas adicionales</label>
+                                <textarea class="form-control" name="notas" rows="2" placeholder="Términos y condiciones, información adicional..."></textarea>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <button type="button" id="previewBtn" class="btn btn-outline-primary me-3 px-4 py-2">
+                                    <i class="fas fa-eye me-2"></i>Previsualizar
+                                </button>
+                                <button type="submit" class="btn btn-primary px-4 py-2">
+                                    <i class="fas fa-file-pdf me-2"></i>Generar PDF
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="preview-section">
+            <div class="preview-header">
+                <h2>Vista Previa del Presupuesto</h2>
+                <p>Así se verá tu presupuesto profesional</p>
+            </div>
+            <div class="preview-content" id="pdfPreview">
+                <img src="" alt="Logo de empresa" class="preview-logo" id="logoPreview" style="display:none;">
+                <p class="text-center mb-4" style="opacity: 0.7;">Complete el formulario y haga clic en "Previsualizar" para ver cómo quedará su presupuesto</p>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3>Profesional</h3>
+                <p>Diseño serio y corporativo para transmitir confianza</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>PDF de Calidad</h3>
+                <p>Genera documentos listos para imprimir o enviar</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Rápido</h3>
+                <p>Crea presupuestos en segundos, no en horas</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 Generador de Presupuestos | Todos los derechos reservados</p>
+        </div>
+    </div>
 
-        <label>Nombre del cliente:</label><br>
-        <input type="text" name="cliente" required><br><br>
-
-        <label>Servicios ofrecidos (separados por coma):</label><br>
-        <input type="text" name="servicios" required><br><br>
-
-        <label>Precio total:</label><br>
-        <input type="text" name="precio" required><br><br>
-
-        <label>Forma de pago:</label><br>
-        <input type="text" name="forma_pago" required><br><br>
-
-        <label>Validez del presupuesto (días):</label><br>
-        <input type="text" name="validez" required><br><br>
-
-        <button type="submit">Generar PDF</button>
-    </form>
+    <script>
+        // Configuración del fondo dinámico con particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4cc9f0"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4895ef",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.5
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Previsualización del logo
+            document.getElementById('logoInput').addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('logoPreview').src = e.target.result;
+                        document.getElementById('logoPreview').style.display = 'block';
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+            
+            // Previsualización del presupuesto
+            document.getElementById('previewBtn').addEventListener('click', function() {
+                // Obtener los valores del formulario
+                const nombre = document.querySelector('input[name="nombre"]').value || 'Nombre de Empresa';
+                const cliente = document.querySelector('input[name="cliente"]').value || 'Nombre del Cliente';
+                const servicios = document.querySelector('textarea[name="servicios"]').value || 'Servicios a prestar';
+                const precio = parseFloat(document.querySelector('input[name="precio"]').value) || 0;
+                const validez = document.querySelector('input[name="validez"]').value || 30;
+                const formaPago = document.querySelector('input[name="forma_pago"]').value || 'Transferencia bancaria';
+                const iva = parseFloat(document.querySelector('input[name="iva"]').value) || 21;
+                const notas = document.querySelector('textarea[name="notas"]').value || 'Términos y condiciones aplicables.';
+                
+                // Calcular valores
+                const ivaMonto = precio * (iva / 100);
+                const subtotal = precio - ivaMonto;
+                const total = precio;
+                
+                // Formatear precios
+                const formatCurrency = (value) => {
+                    return new Intl.NumberFormat('es-ES', {
+                        style: 'currency',
+                        currency: 'EUR',
+                        minimumFractionDigits: 2
+                    }).format(value);
+                };
+                
+                // Mostrar vista previa
+                const preview = document.getElementById('pdfPreview');
+                preview.innerHTML = `
+                    <div class="text-center mb-4">
+                        <img src="" alt="Logo de empresa" class="preview-logo mb-3" id="logoPreview" style="${document.getElementById('logoPreview').style.display}">
+                        <h2 style="color: #4cc9f0; font-weight: 700; font-size: 2rem;">PRESUPUESTO</h2>
+                        <p style="color: #94a3b8; margin-top: 0.5rem;">Nº: ${Math.floor(10000 + Math.random() * 90000)}</p>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap;">
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="color: #4895ef; border-bottom: 2px solid #4895ef; padding-bottom: 5px; margin-bottom: 10px;">EMPRESA</h4>
+                            <p style="margin-bottom: 5px;"><strong>${nombre}</strong></p>
+                            <p style="margin-bottom: 5px;">Calle Principal, 123</p>
+                            <p style="margin-bottom: 5px;">28001 Madrid, España</p>
+                            <p style="margin-bottom: 5px;">info@${nombre.replace(/\s+/g, '').toLowerCase()}.com</p>
+                            <p style="margin-bottom: 5px;">+34 91 123 4567</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="color: #4895ef; border-bottom: 2px solid #4895ef; padding-bottom: 5px; margin-bottom: 10px; text-align: right;">CLIENTE</h4>
+                            <p style="margin-bottom: 5px; text-align: right;"><strong>${cliente}</strong></p>
+                            <p style="margin-bottom: 5px; text-align: right;">Cliente Corporativo S.L.</p>
+                            <p style="margin-bottom: 5px; text-align: right;">Calle Cliente, 456</p>
+                            <p style="margin-bottom: 5px; text-align: right;">28002 Madrid, España</p>
+                            <p style="margin-bottom: 5px; text-align: right;">${cliente.replace(/\s+/g, '.').toLowerCase()}@empresa.com</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #4895ef; border-bottom: 2px solid #4895ef; padding-bottom: 5px; margin-bottom: 15px;">DETALLES DEL PRESUPUESTO</h4>
+                        <p><strong>Fecha:</strong> ${new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                        <p><strong>Válido hasta:</strong> ${new Date(Date.now() + validez * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #4895ef; border-bottom: 2px solid #4895ef; padding-bottom: 5px; margin-bottom: 15px;">SERVICIOS</h4>
+                        <p>${servicios.replace(/\n/g, '<br>')}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: rgba(67, 97, 238, 0.1);">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid rgba(76, 201, 240, 0.3);">Descripción</th>
+                                    <th style="padding: 10px; text-align: right; border: 1px solid rgba(76, 201, 240, 0.3);">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid rgba(76, 201, 240, 0.3);">Servicios descritos</td>
+                                    <td style="padding: 10px; text-align: right; border: 1px solid rgba(76, 201, 240, 0.3);">${formatCurrency(subtotal)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid rgba(76, 201, 240, 0.3);">IVA (${iva}%)</td>
+                                    <td style="padding: 10px; text-align: right; border: 1px solid rgba(76, 201, 240, 0.3);">${formatCurrency(ivaMonto)}</td>
+                                </tr>
+                                <tr style="font-weight: bold; background-color: rgba(67, 97, 238, 0.05);">
+                                    <td style="padding: 10px; border: 1px solid rgba(76, 201, 240, 0.3);">TOTAL</td>
+                                    <td style="padding: 10px; text-align: right; border: 1px solid rgba(76, 201, 240, 0.3);">${formatCurrency(total)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <h4 style="color: #4895ef; border-bottom: 2px solid #4895ef; padding-bottom: 5px; margin-bottom: 10px;">CONDICIONES DE PAGO</h4>
+                        <p>${formaPago}</p>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px dashed rgba(76, 201, 240, 0.3);">
+                        <p><strong>Notas:</strong> ${notas}</p>
+                    </div>
+                    
+                    <div style="margin-top: 3rem; text-align: center; color: #94a3b8; font-size: 0.9rem;">
+                        <p>${nombre} - NIF: A12345678 - Tel: +34 91 123 4567</p>
+                        <p>www.${nombre.replace(/\s+/g, '').toLowerCase()}.com</p>
+                    </div>
+                `;
+                
+                // Actualizar logo en la previsualización si existe
+                const logoInput = document.getElementById('logoInput');
+                if (logoInput.files && logoInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('#pdfPreview .preview-logo').src = e.target.result;
+                        document.querySelector('#pdfPreview .preview-logo').style.display = 'block';
+                    }
+                    reader.readAsDataURL(logoInput.files[0]);
+                }
+            });
+            
+            // Envío del formulario para generar PDF
+            document.getElementById('presupuestoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Mostrar indicador de carga
+                const submitBtn = document.querySelector('#presupuestoForm button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generando PDF...';
+                submitBtn.disabled = true;
+                
+                // Crear FormData para enviar los datos
+                const formData = new FormData(this);
+                
+                // Enviar datos al backend
+                fetch('/generar', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Error al generar el PDF');
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Crear enlace para descargar el PDF
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'presupuesto.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    
+                    // Restaurar botón
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al generar el PDF: ' + error.message);
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+            });
+        });
+    </script>
 </body>
 </html>
